@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const intervalUnitSelect = document.getElementById('interval-unit');
     const errorMsg = document.getElementById('error-msg');
     const resultsSection = document.getElementById('results-section');
-    
+
     // Set max date to today
     dobInput.max = new Date().toISOString().split("T")[0];
 
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 3. Calculate Interval in Days
         let intervalDays = 0;
-        switch(unit) {
+        switch (unit) {
             case 'years': intervalDays = val * 365.25; break;
             case 'months': intervalDays = val * 30.44; break;
             case 'weeks': intervalDays = val * 7; break;
@@ -59,20 +59,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 4. Calculate Ratio
         const ratio = intervalDays / ageInDays;
-        
+
         // Update Visualization
         const percentage = (ratio * 100).toFixed(2);
-        
+
         // Clamp stroke for circle (0 to 100)
         let strokeVal = ratio * 100;
         // The stroke-dasharray is "current, 100". 
         // If > 100, the circle just fills completely (or loops if we handled it, but fill is fine)
         if (strokeVal > 100) strokeVal = 100; // Cap visual fill at 100%
-        
+
         document.getElementById('percent-display').textContent = percentage + "%";
         document.getElementById('percent-text').textContent = (ratio * 100).toFixed(1) + "%";
         document.getElementById('input-interval-text').textContent = `${val} ${unit}`;
-        
+
         // Update Circle Animation
         // We need to re-trigger animation or just set styles. 
         // Simple way: set the attribute directly.
@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 5. Generate Comparisons
         generateComparisons(ratio);
+        generateSpeciesComparisons(ratio);
 
         // Show Results
         resultsSection.classList.remove('hidden');
@@ -128,8 +129,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (obj.months > 0) parts.push(`${obj.months} month${obj.months !== 1 ? 's' : ''}`);
         if (obj.weeks > 0) parts.push(`${obj.weeks} week${obj.weeks !== 1 ? 's' : ''}`);
         if (obj.days > 0) parts.push(`${obj.days} day${obj.days !== 1 ? 's' : ''}`);
-        
-        if (parts.length === 0) return "0 days";
+
+        if (parts.length === 0) return "Less than 1 day";
         return parts.join(', ');
     }
 
@@ -140,16 +141,16 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function daysToDuration(totalDays) {
         let d = totalDays;
-        
+
         const years = Math.floor(d / 365.25);
         d -= years * 365.25;
-        
+
         const months = Math.floor(d / 30.44);
         d -= months * 30.44;
-        
+
         const weeks = Math.floor(d / 7);
         d -= weeks * 7;
-        
+
         const days = Math.floor(d);
 
         return { years, months, weeks, days };
@@ -167,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Duration = AgeInDays * Ratio
             const refAgeDays = age * 365.25;
             const subjectiveDurationDays = refAgeDays * ratio;
-            
+
             const durationObj = daysToDuration(subjectiveDurationDays);
             const durationStr = formatDuration(durationObj);
 
@@ -176,6 +177,37 @@ document.addEventListener('DOMContentLoaded', () => {
             card.className = 'comp-card';
             card.innerHTML = `
                 <div class="comp-age">To a ${age} year old</div>
+                <div class="comp-duration">${durationStr}</div>
+                <div class="comp-age" style="margin-top:0.5rem; font-size:0.8rem; opacity:0.7">feels like your interval</div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function generateSpeciesComparisons(ratio) {
+        const container = document.getElementById('species-container');
+        container.innerHTML = '';
+
+        const speciesData = [
+            { name: "Gnat", lifespanDays: 7, icon: "🦟" },
+            { name: "Cat", lifespanDays: 15 * 365.25, icon: "🐱" },
+            { name: "Dog", lifespanDays: 12 * 365.25, icon: "🐶" },
+            { name: "Horse", lifespanDays: 25 * 365.25, icon: "🐴" },
+            { name: "Galapagos Turtle", lifespanDays: 100 * 365.25, icon: "🐢" },
+            { name: "Redwood", lifespanDays: 2000 * 365.25, icon: "🌲" },
+            { name: "Bristlecone Pine", lifespanDays: 5000 * 365.25, icon: "🌲" }
+        ];
+
+        speciesData.forEach(species => {
+            const subjectiveDurationDays = species.lifespanDays * ratio;
+            const durationObj = daysToDuration(subjectiveDurationDays);
+            const durationStr = formatDuration(durationObj);
+
+            const card = document.createElement('div');
+            card.className = 'comp-card';
+            card.innerHTML = `
+                <div class="comp-age" style="font-size: 1.2rem; margin-bottom: 0.2rem;">${species.icon}</div>
+                <div class="comp-age">To a ${species.name}</div>
                 <div class="comp-duration">${durationStr}</div>
                 <div class="comp-age" style="margin-top:0.5rem; font-size:0.8rem; opacity:0.7">feels like your interval</div>
             `;

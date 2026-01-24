@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chronos - Time Perception Engine</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <div class="background-globes">
         <div class="globe globe-1"></div>
@@ -31,7 +35,7 @@
                         <label for="dob">Date of Birth</label>
                         <input type="date" id="dob" required>
                     </div>
-                    
+
                     <div class="input-row">
                         <div class="input-group">
                             <label for="interval-value">Time Interval</label>
@@ -65,21 +69,17 @@
                             <span class="label">Perception Ratio</span>
                             <div class="percentage-circle">
                                 <svg viewBox="0 0 36 36" class="circular-chart">
-                                    <path class="circle-bg"
-                                        d="M18 2.0845
+                                    <path class="circle-bg" d="M18 2.0845
                                         a 15.9155 15.9155 0 0 1 0 31.831
-                                        a 15.9155 15.9155 0 0 1 0 -31.831"
-                                    />
-                                    <path id="circle-stroke" class="circle"
-                                        stroke-dasharray="0, 100"
-                                        d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path id="circle-stroke" class="circle" stroke-dasharray="0, 100" d="M18 2.0845
                                         a 15.9155 15.9155 0 0 1 0 31.831
-                                        a 15.9155 15.9155 0 0 1 0 -31.831"
-                                    />
+                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
                                 </svg>
                                 <span id="percent-text">0%</span>
                             </div>
-                            <p class="insight-text">To you, <span id="input-interval-text">that interval</span> feels like <span id="percent-display">0%</span> of your entire existence.</p>
+                            <p class="insight-text">To you, <span id="input-interval-text">that interval</span> feels
+                                like <span id="percent-display">0%</span> of your entire existence.</p>
                         </div>
                     </div>
                 </div>
@@ -90,13 +90,21 @@
                         <!-- Cards will be injected here by JS -->
                     </div>
                 </div>
+
+                <div class="comparison-grid" style="margin-top: 3rem;">
+                    <h4>Across the Animal & Plant Kingdoms</h4>
+                    <div class="grid" id="species-container">
+                        <!-- Species Cards injected here -->
+                    </div>
+                </div>
             </section>
         </main>
-        
+
         <footer>
             <p>Time is relative to the observer.</p>
         </footer>
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>
