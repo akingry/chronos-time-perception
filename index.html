@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronos - Time Perception Engine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="background-globes">
+        <div class="globe globe-1"></div>
+        <div class="globe globe-2"></div>
+        <div class="globe globe-3"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Chronos</h1>
+            <p class="subtitle">The Relativity of Human Perception</p>
+        </header>
+
+        <main>
+            <section class="input-panel">
+                <div class="card glass-panel">
+                    <h2>Define Your Timeline</h2>
+                    <div class="input-group">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" id="dob" required>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="interval-value">Time Interval</label>
+                            <input type="number" id="interval-value" placeholder="e.g., 5" min="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="interval-unit">Unit</label>
+                            <select id="interval-unit">
+                                <option value="years">Years</option>
+                                <option value="months">Months</option>
+                                <option value="weeks">Weeks</option>
+                                <option value="days">Days</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button id="calculate-btn" class="glow-button">Analyze Perception</button>
+                    <div id="error-msg" class="error hidden"></div>
+                </div>
+            </section>
+
+            <section id="results-section" class="results-panel hidden">
+                <div class="card glass-panel highlight-panel">
+                    <h3>Your Reality</h3>
+                    <div class="result-highlight">
+                        <div class="age-display">
+                            <span class="label">Exact Age</span>
+                            <span id="exact-age" class="value-text">0 years, 0 days</span>
+                        </div>
+                        <div class="perception-display">
+                            <span class="label">Perception Ratio</span>
+                            <div class="percentage-circle">
+                                <svg viewBox="0 0 36 36" class="circular-chart">
+                                    <path class="circle-bg"
+                                        d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    />
+                                    <path id="circle-stroke" class="circle"
+                                        stroke-dasharray="0, 100"
+                                        d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    />
+                                </svg>
+                                <span id="percent-text">0%</span>
+                            </div>
+                            <p class="insight-text">To you, <span id="input-interval-text">that interval</span> feels like <span id="percent-display">0%</span> of your entire existence.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-grid">
+                    <h4>Equivalent Subjective Duration for Others</h4>
+                    <div class="grid" id="comparison-container">
+                        <!-- Cards will be injected here by JS -->
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>Time is relative to the observer.</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
