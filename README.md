@@ -10,7 +10,6 @@ Chronos is an interactive web application that explores the subjective nature of
 - **Comparative Relativity**:
   - Compare how your specified interval feels to people of different ages (e.g., "To a 7-year-old, this feels like...").
   - Cross-species comparisons (e.g., "To a Galápagos Turtle, this feels like...").
-- **Responsive Design**: A sleek, modern interface with glassmorphism effects and smooth animations.
 
 ## How to Use
 
