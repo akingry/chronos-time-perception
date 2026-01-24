@@ -130,16 +130,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (obj.weeks > 0) parts.push(`${obj.weeks} week${obj.weeks !== 1 ? 's' : ''}`);
         if (obj.days > 0) parts.push(`${obj.days} day${obj.days !== 1 ? 's' : ''}`);
 
-        if (parts.length === 0) return "Less than 1 day";
+        // Show hours/minutes if present (for precision mode) or if explicitly requested
+        if (obj.hours > 0) parts.push(`${obj.hours} hour${obj.hours !== 1 ? 's' : ''}`);
+        if (obj.minutes > 0) parts.push(`${obj.minutes} minute${obj.minutes !== 1 ? 's' : ''}`);
+
+        if (parts.length === 0) return "Less than 1 minute";
         return parts.join(', ');
     }
 
     /**
-     * Converts total days back into a structure {years, months, weeks, days}
+     * Converts total days back into a structure {years, months, weeks, days, hours, minutes}
      * for abstract durations (not calendar bound).
      * Using standard averages: Year=365.25, Month=30.44
      */
-    function daysToDuration(totalDays) {
+    function daysToDuration(totalDays, highPrecision = false) {
         let d = totalDays;
 
         const years = Math.floor(d / 365.25);
@@ -153,7 +157,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const days = Math.floor(d);
 
-        return { years, months, weeks, days };
+        let hours = 0;
+        let minutes = 0;
+
+        if (highPrecision) {
+            d -= days; // Remaining fraction of a day
+            let h = d * 24;
+            hours = Math.floor(h);
+            h -= hours;
+            let m = h * 60;
+            minutes = Math.round(m);
+        }
+
+        return { years, months, weeks, days, hours, minutes };
     }
 
     function generateComparisons(ratio) {
@@ -169,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const refAgeDays = age * 365.25;
             const subjectiveDurationDays = refAgeDays * ratio;
 
-            const durationObj = daysToDuration(subjectiveDurationDays);
+            const durationObj = daysToDuration(subjectiveDurationDays, false);
             const durationStr = formatDuration(durationObj);
 
             // Create Card
@@ -189,18 +205,17 @@ document.addEventListener('DOMContentLoaded', () => {
         container.innerHTML = '';
 
         const speciesData = [
-            { name: "Gnat", lifespanDays: 7, icon: "🦟" },
-            { name: "Cat", lifespanDays: 15 * 365.25, icon: "🐱" },
-            { name: "Dog", lifespanDays: 12 * 365.25, icon: "🐶" },
-            { name: "Horse", lifespanDays: 25 * 365.25, icon: "🐴" },
-            { name: "Galapagos Turtle", lifespanDays: 100 * 365.25, icon: "🐢" },
-            { name: "Redwood", lifespanDays: 2000 * 365.25, icon: "🌲" },
-            { name: "Bristlecone Pine", lifespanDays: 5000 * 365.25, icon: "🌲" }
+            { name: "Gnat", lifespanDays: 7, icon: "🦟", precision: true },
+            { name: "Cat", lifespanDays: 15 * 365.25, icon: "🐱", precision: true },
+            { name: "Horse", lifespanDays: 25 * 365.25, icon: "🐴", precision: false },
+            { name: "Galapagos Turtle", lifespanDays: 100 * 365.25, icon: "🐢", precision: false },
+            { name: "Redwood", lifespanDays: 2000 * 365.25, icon: "🌲", precision: false },
+            { name: "Bristlecone Pine", lifespanDays: 5000 * 365.25, icon: "🌲", precision: false }
         ];
 
         speciesData.forEach(species => {
             const subjectiveDurationDays = species.lifespanDays * ratio;
-            const durationObj = daysToDuration(subjectiveDurationDays);
+            const durationObj = daysToDuration(subjectiveDurationDays, species.precision);
             const durationStr = formatDuration(durationObj);
 
             const card = document.createElement('div');
