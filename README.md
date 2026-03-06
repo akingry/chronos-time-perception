@@ -1,4 +1,4 @@
-# Chronos: The Relativity of Temporal Perception
+﻿# Chronos: The Relativity of Temporal Perception
 
 Chronos is an interactive web application that explores the subjective nature of time perception. Based on the concept that time feels faster as we age because each new interval represents a smaller fraction of our total life experience, this tool helps visualize and compare these relative perceptions.
 
@@ -9,7 +9,7 @@ Chronos is an interactive web application that explores the subjective nature of
 - **Visual Representation**: Dynamic circular visualization of the time ratio.
 - **Comparative Relativity**:
   - Compare how your specified interval feels to people of different ages (e.g., "To a 7-year-old, this feels like...").
-  - Cross-species comparisons (e.g., "To a Galápagos Turtle, this feels like...").
+  - Cross-species comparisons (e.g., "To a GalÃ¡pagos Turtle, this feels like...").
 
 ## How to Use
 
@@ -28,3 +28,7 @@ Chronos is an interactive web application that explores the subjective nature of
 ## License
 
 &copy; 2026 Adam Kingry.
+
+## License
+
+Copyright (c) 2026 Adam Kingry. Licensed under the [MIT License](LICENSE).
